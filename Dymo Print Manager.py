@@ -195,10 +195,10 @@ class DymoPrintManager(tk.Tk):
         print_button.grid(column=2, row=5, pady=10)
 
     ### Listbox Entry Handler Functions
-    def update_contact(self, index, employee, guest1, guest2, guest3, tour, edit_window):
+    def update_contact(self, emp_id, employee, guest1, guest2, guest3, tour, edit_window):
         # Update the contact details in the contacts list
-        employee_index = self.find_and_return_id(index)
-        self.employees[employee_index].updateDetails(employee, guest1, guest2, guest3, tour)
+        emp_index = self.find_index_by_id(emp_id)
+        self.employees[emp_index].updateDetails(employee, guest1, guest2, guest3, tour)
 
         # Refresh the Listbox and Tour dropdown to reflect the changes
         self.refresh_listbox()
@@ -207,9 +207,10 @@ class DymoPrintManager(tk.Tk):
         # Close the edit window
         edit_window.destroy()
 
-    def delete_contact(self, index, edit_window):
+    def delete_contact(self, emp_id, edit_window):
         # Delete the contact at the provided index
-        self.employees.pop(index)
+        emp_index = self.find_index_by_id(emp_id)
+        self.employees.pop(emp_index)
 
         # Refresh the Listbox to reflect the changes
         self.refresh_listbox()
@@ -217,13 +218,14 @@ class DymoPrintManager(tk.Tk):
         # Close the edit window
         edit_window.destroy()
     
-    def print_contact(self, index, employee, guest1, guest2, guest3, tour, edit_window):
-        selected_emp = self.employees[index]
+    def print_contact(self, emp_id, employee, guest1, guest2, guest3, tour, edit_window):
+        emp_index = self.find_index_by_id(emp_id)
+        selected_emp = self.find_by_id(emp_id)
 
         # If any changes have been made, call update before printing
         if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Tour != tour:
-            self.update_contact(index, employee, guest1, guest2, guest3, tour, edit_window)
-        self.printer.printLabelList([self.employees[index]])
+            self.update_contact(emp_index, employee, guest1, guest2, guest3, tour, edit_window)
+        self.printer.printLabelList([self.employees[emp_index]])
     
     def refresh_listbox(self):
         # Clear the Listbox
@@ -256,11 +258,13 @@ class DymoPrintManager(tk.Tk):
     def find_employee(self):
         self.search_listbox(self.search_entry.get(),"Name")
 
-    def find_and_return_id(self,id):
+    def find_index_by_id(self,id):
+        print(f"find and return: {id}")
         employee = list(filter(lambda emp: emp.ID == id, self.employees))[0]
         return self.employees.index(employee)
     
     def find_by_id(self,id):
+        print(f"find by: {id}")
         return list(filter(lambda emp: emp.ID == id, self.employees))[0]
 
     def update_selected_option(self,opt):

@@ -1,6 +1,7 @@
 import win32com.client
 import json
 from os import path as ospath
+from tkinter.filedialog import askopenfilename as tkopenfile
 
 class DymoPrintService():
     # Create DYMO COM object
@@ -11,7 +12,7 @@ class DymoPrintService():
     def __init__(self):
         self.label = win32com.client.Dispatch("Dymo.DymoAddIn")
         self.labelText = win32com.client.Dispatch("Dymo.DymoLabels")
-        self.setTemplate()
+        self.readTemplate()
         # Load the template
         #if not self.label.Open(r"C:\Users\O89301\OneDrive - The Coca-Cola Company\Documents\DYMO Label\Labels\OpenDay-Basic.label"):
         if not self.label.Open(self.template):
@@ -40,11 +41,29 @@ class DymoPrintService():
         except Exception as e:
             return e
         
-    def setTemplate(self):
+    def readTemplate(self):
         # Get the directory of the current file
         filepath = ospath.dirname(ospath.realpath(__file__))
         config_path = ospath.join(filepath,'config.json')
         with open(config_path,'r') as config:
             data = json.load(config)
         self.template = data['template']
-        
+
+    def setTemplate(self):
+        label_file = tkopenfile(
+            title="Select a File",
+            filetypes=[("Label Files", "*.label")]
+        )
+
+        # Get the directory of the current file
+        filepath = ospath.dirname(ospath.realpath(__file__))
+        print(filepath)
+        config_path = ospath.join(filepath,'config.json')
+        if not self.label.Open(label_file):
+            raise Exception("Could not open label template")
+        else:
+            with open(config_path,'w') as config:
+                config.write(json.dumps({"template":filepath}))
+            self.template = label_file
+
+
