@@ -201,7 +201,7 @@ class DymoPrintManager(tk.Tk):
         self.employees[emp_index].updateDetails(employee, guest1, guest2, guest3, tour)
 
         # Refresh the Listbox and Tour dropdown to reflect the changes
-        self.refresh_listbox()
+        self.refresh_listbox(reset=False)
         self.update_tour_options()
 
         # Close the edit window
@@ -213,7 +213,8 @@ class DymoPrintManager(tk.Tk):
         self.employees.pop(emp_index)
 
         # Refresh the Listbox to reflect the changes
-        self.refresh_listbox()
+        self.refresh_listbox(reset=False)
+        self.update_tour_options()
 
         # Close the edit window
         edit_window.destroy()
@@ -227,12 +228,25 @@ class DymoPrintManager(tk.Tk):
             self.update_contact(emp_index, employee, guest1, guest2, guest3, tour, edit_window)
         self.printer.printLabelList([self.employees[emp_index]])
     
-    def refresh_listbox(self):
+    def refresh_listbox(self, reset=True):
         # Clear the Listbox
         self.employee_listbox.delete(0, tk.END)
 
         # Sync Lists
-        self.active_employees = self.employees
+        # If not resetting the whole list, remove and re-add each active record to get updated info
+        if not reset:
+            results: List[Employee]=[]
+            for e in self.active_employees:
+                id = e.ID
+                index = 0
+                new_emp = self.find_by_id(id)
+                if new_emp:
+                    print(new_emp.Employee)
+                    results.append(new_emp)
+                index += 1
+            self.active_employees = results
+        else:
+            self.active_employees = self.employees
 
         # Sort Contacts
         self.active_employees.sort(key=lambda emp: emp.Employee)
@@ -259,13 +273,15 @@ class DymoPrintManager(tk.Tk):
         self.search_listbox(self.search_entry.get(),"Name")
 
     def find_index_by_id(self,id):
-        print(f"find and return: {id}")
         employee = list(filter(lambda emp: emp.ID == id, self.employees))[0]
         return self.employees.index(employee)
     
     def find_by_id(self,id):
-        print(f"find by: {id}")
-        return list(filter(lambda emp: emp.ID == id, self.employees))[0]
+        id = list(filter(lambda emp: emp.ID == id, self.employees))
+        if len(id) != 0:
+            return id[0]
+        else:
+            return False
 
     def update_selected_option(self,opt):
         self.selected_option.set(opt)
