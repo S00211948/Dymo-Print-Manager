@@ -185,7 +185,8 @@ class DymoPrintManager(tk.Tk):
         delete_button.grid(column=1, row=5, pady=10)
 
         # Print Button
-        delete_button = ttk.Button(edit_window, text="Print", command=lambda: self.printer.printLabelList([contact]))
+        #delete_button = ttk.Button(edit_window, text="Print", command=lambda: self.printer.printLabelList([contact]))
+        delete_button = ttk.Button(edit_window, text="Print", command=lambda: self.print_contact(index, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), tour_entry.get(), edit_window))
         delete_button.grid(column=2, row=5, pady=10)
 
     ### Listbox Entry Handler Functions
@@ -208,6 +209,14 @@ class DymoPrintManager(tk.Tk):
 
         # Close the edit window
         edit_window.destroy()
+    
+    def print_contact(self, index, employee, guest1, guest2, guest3, tour, edit_window):
+        selected_emp = self.employees[index]
+
+        # If any changes have been made, call update before printing
+        if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Tour != tour:
+            self.update_contact(index, employee, guest1, guest2, guest3, tour, edit_window)
+        self.printer.printLabelList([self.employees[index]])
 
     def refresh_listbox(self):
         # Clear the Listbox

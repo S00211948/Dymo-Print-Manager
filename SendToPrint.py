@@ -1,16 +1,20 @@
 import win32com.client
+import json
+from os import path as ospath
 
 class DymoPrintService():
     # Create DYMO COM object
     label = None
     labelText = None
-
+    template = None
     
     def __init__(self):
         self.label = win32com.client.Dispatch("Dymo.DymoAddIn")
         self.labelText = win32com.client.Dispatch("Dymo.DymoLabels")
+        self.setTemplate()
         # Load the template
-        if not self.label.Open(r"C:\Users\O89301\OneDrive - The Coca-Cola Company\Documents\DYMO Label\Labels\OpenDay-Basic.label"):
+        #if not self.label.Open(r"C:\Users\O89301\OneDrive - The Coca-Cola Company\Documents\DYMO Label\Labels\OpenDay-Basic.label"):
+        if not self.label.Open(self.template):
             raise Exception("Could not open label template")
 
     def printLabelList(self,dataObj):
@@ -35,3 +39,12 @@ class DymoPrintService():
             return res_data
         except Exception as e:
             return e
+        
+    def setTemplate(self):
+        # Get the directory of the current file
+        filepath = ospath.dirname(ospath.realpath(__file__))
+        config_path = ospath.join(filepath,'config.json')
+        with open(config_path,'r') as config:
+            data = json.load(config)
+        self.template = data['template']
+        
