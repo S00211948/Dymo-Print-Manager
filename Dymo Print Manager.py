@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import StringVar, ttk, filedialog, messagebox
-import csv
+from csv import DictReader as csv_DictReader
 from typing import List
 from SendToPrint import DymoPrintService
 
@@ -314,7 +314,7 @@ class DymoPrintManager(tk.Tk):
 def parse_csv(file_path):
     employees = []
     index=0
-    for row in csv.DictReader(open(file_path, encoding='utf-8-sig')):
+    for row in csv_DictReader(open(file_path, encoding='utf-8-sig')):
         index+=1
         employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Tour_Number'],index))
     

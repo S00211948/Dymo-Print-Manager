@@ -1,7 +1,9 @@
 import win32com.client
-import json
+from json import load as jsload
+from json import dumps as jsdumps
 from os import path as ospath
 from tkinter.filedialog import askopenfilename as tkopenfile
+import sys
 
 class DymoPrintService():
     # Create DYMO COM object
@@ -43,10 +45,10 @@ class DymoPrintService():
         
     def readTemplate(self):
         # Get the directory of the current file
-        filepath = ospath.dirname(ospath.realpath(__file__))
+        filepath = self.get_path()
         config_path = ospath.join(filepath,'config.json')
         with open(config_path,'r') as config:
-            data = json.load(config)
+            data = jsload(config)
         self.template = data['template']
 
     def setTemplate(self):
@@ -56,14 +58,19 @@ class DymoPrintService():
         )
 
         # Get the directory of the current file
-        filepath = ospath.dirname(ospath.realpath(__file__))
-        print(filepath)
+        filepath = self.get_path()
         config_path = ospath.join(filepath,'config.json')
         if not self.label.Open(label_file):
             raise Exception("Could not open label template")
         else:
             with open(config_path,'w') as config:
-                config.write(json.dumps({"template":filepath}))
+                config.write(jsdumps({"template":filepath}))
             self.template = label_file
-
-
+    
+    def get_path(self):
+        if hasattr(sys, 'frozen'):  
+            # When running as .exe
+            return ospath.dirname(ospath.realpath(sys.executable))
+        else:
+            # When running as .py
+            return ospath.dirname(ospath.realpath(__file__))
