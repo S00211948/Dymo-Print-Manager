@@ -29,6 +29,7 @@ class DymoPrintService():
                     self.labelText.SetField("Employee", l["Employee_Name"])
                     self.labelText.SetField("Visitor", l["Visitor_Name"])
                     self.labelText.SetField("Tour", l["Tour_Number"])
+                    self.labelText.SetField("QRcode",l["ID"])
                     self.label.StartPrintJob()
                     self.label.Print(1, False)   # 1 copy, not asynchronously
                     self.label.EndPrintJob()
@@ -38,7 +39,7 @@ class DymoPrintService():
             res_data=[]
             for i in range(1,4):
                 if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
-                    res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour']})
+                    res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
             return res_data
         except Exception as e:
             return e

@@ -29,7 +29,7 @@ class Employee():
         self.Tour = tour
     
     def __getitem__(self, key):
-        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Tour": self.Tour}[key]
+        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Tour": self.Tour, "ID": self.ID}[key]
 
 
 class DymoPrintManager(tk.Tk):
@@ -241,7 +241,7 @@ class DymoPrintManager(tk.Tk):
                 index = 0
                 new_emp = self.find_by_id(id)
                 if new_emp:
-                    print(new_emp.Employee)
+                    #print(new_emp.Employee)
                     results.append(new_emp)
                 index += 1
             self.active_employees = results
@@ -316,7 +316,7 @@ def parse_csv(file_path):
     index=0
     for row in csv_DictReader(open(file_path, encoding='utf-8-sig')):
         index+=1
-        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Tour_Number'],index))
+        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Tour_Number'],row['Employee_KOID']))
     
     return employees
 
