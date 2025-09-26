@@ -37,7 +37,7 @@ class DymoPrintService():
     def formatForPrinting(self,dataObject):
         try:
             res_data=[]
-            for i in range(1,4):
+            for i in range(1,7):
                 if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
                     res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
             return res_data

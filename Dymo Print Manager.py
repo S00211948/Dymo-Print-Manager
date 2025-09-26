@@ -147,7 +147,7 @@ class DymoPrintManager(tk.Tk):
 
         # Window dimensions
         w = 300
-        h = 200
+        h = 300
 
         # get screen width and height
         ws = self.winfo_screenwidth() # width of the screen
@@ -185,29 +185,46 @@ class DymoPrintManager(tk.Tk):
         guest3_entry.grid(column=1, row=3, columnspan=2, padx=10, pady=5, sticky='EW')
         guest3_entry.insert(0, contact.Guest_3)
 
-        tk.Label(edit_window, text="Tour:").grid(column=0, row=4, padx=10, pady=5, sticky='W')
+        # Extra guests for exceptions
+
+        tk.Label(edit_window, text="Guest 4:").grid(column=0, row=4, padx=10, pady=5, sticky='W')
+        guest4_entry = ttk.Entry(edit_window)
+        guest4_entry.grid(column=1, row=4, columnspan=2, padx=10, pady=5, sticky='EW')
+        guest4_entry.insert(0, str(contact.Guest_4))
+
+        tk.Label(edit_window, text="Guest 5:").grid(column=0, row=5, padx=10, pady=5, sticky='W')
+        guest5_entry = ttk.Entry(edit_window)
+        guest5_entry.grid(column=1, row=5, columnspan=2, padx=10, pady=5, sticky='EW')
+        guest5_entry.insert(0, contact.Guest_5)
+
+        tk.Label(edit_window, text="Guest 6:").grid(column=0, row=6, padx=10, pady=5, sticky='W')
+        guest6_entry = ttk.Entry(edit_window)
+        guest6_entry.grid(column=1, row=6, columnspan=2, padx=10, pady=5, sticky='EW')
+        guest6_entry.insert(0, contact.Guest_6)
+
+        tk.Label(edit_window, text="Tour:").grid(column=0, row=7, padx=10, pady=5, sticky='W')
         tour_entry = ttk.Entry(edit_window)
-        tour_entry.grid(column=1, row=4, columnspan=2, padx=10, pady=5, sticky='EW')
+        tour_entry.grid(column=1, row=7, columnspan=2, padx=10, pady=5, sticky='EW')
         tour_entry.insert(0, contact.Tour)
 
         # Update Button
-        update_button = ttk.Button(edit_window, text="Update", command=lambda: self.update_contact(contact.ID, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), tour_entry.get(), edit_window))
-        update_button.grid(column=0, row=5, pady=10)
+        update_button = ttk.Button(edit_window, text="Update", command=lambda: self.update_contact(contact.ID, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), guest4_entry.get(), guest5_entry.get(), guest6_entry.get(), tour_entry.get(), edit_window))
+        update_button.grid(column=0, row=8, pady=10)
 
         # Delete Button
         delete_button = ttk.Button(edit_window, text="Delete", command=lambda: self.delete_contact(contact.ID, edit_window))
-        delete_button.grid(column=1, row=5, pady=10)
+        delete_button.grid(column=1, row=8, pady=10)
 
         # Print Button
         #delete_button = ttk.Button(edit_window, text="Print", command=lambda: self.printer.printLabelList([contact]))
-        print_button = ttk.Button(edit_window, text="Print", command=lambda: self.print_contact(contact.ID, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), tour_entry.get(), edit_window))
-        print_button.grid(column=2, row=5, pady=10)
+        print_button = ttk.Button(edit_window, text="Print", command=lambda: self.print_contact(contact.ID, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), guest4_entry.get(), guest5_entry.get(), guest6_entry.get(), tour_entry.get(), edit_window))
+        print_button.grid(column=2, row=8, pady=10)
 
     ### Listbox Entry Handler Functions
-    def update_contact(self, emp_id, employee, guest1, guest2, guest3, tour, edit_window):
+    def update_contact(self, emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, edit_window):
         # Update the contact details in the contacts list
         emp_index = self.find_index_by_id(emp_id)
-        self.employees[emp_index].updateDetails(employee, guest1, guest2, guest3, tour)
+        self.employees[emp_index].updateDetails(employee, guest1, guest2, guest3, guest4, guest5, guest6, tour)
 
         # Refresh the Listbox and Tour dropdown to reflect the changes
         self.refresh_listbox(reset=False)
@@ -228,13 +245,13 @@ class DymoPrintManager(tk.Tk):
         # Close the edit window
         edit_window.destroy()
     
-    def print_contact(self, emp_id, employee, guest1, guest2, guest3, tour, edit_window):
+    def print_contact(self, emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, edit_window):
         emp_index = self.find_index_by_id(emp_id)
         selected_emp = self.find_by_id(emp_id)
 
         # If any changes have been made, call update before printing
-        if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Tour != tour:
-            self.update_contact(emp_index, employee, guest1, guest2, guest3, tour, edit_window)
+        if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Guest_4 != guest4 or selected_emp.Guest_5 != guest5 or selected_emp.Guest_6 != guest6 or selected_emp.Tour != tour:
+            self.update_contact(emp_index, employee, guest1, guest2, guest3, guest3, guest4, guest5, guest6, tour, edit_window)
         self.printer.printLabelList([self.employees[emp_index]])
     
     def refresh_listbox(self, reset=True):
@@ -325,7 +342,7 @@ def parse_csv(file_path):
     index=0
     for row in csv_DictReader(open(file_path, encoding='utf-8-sig')):
         index+=1
-        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Tour_Number'],row['Employee_KOID']))
+        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Guest_4'],row['Guest_5'],row['Guest_6'],row['Tour_Number'],row['Employee_KOID']))
     
     return employees
 
