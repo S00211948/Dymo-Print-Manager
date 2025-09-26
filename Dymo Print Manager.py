@@ -9,27 +9,36 @@ class Employee():
     Guest_1 = ""
     Guest_2 = ""
     Guest_3 = ""
+    Guest_4 = ""
+    Guest_5 = ""
+    Guest_6 = ""
     Tour = ""
     ID=0
 
     # constructor
-    def __init__(self, emp, g1, g2, g3, tour, id):
+    def __init__(self, emp, g1, g2, g3, g4, g5, g6, tour, id):
         self.Employee = emp
         self.Guest_1 = g1
         self.Guest_2 = g2
         self.Guest_3 = g3
+        self.Guest_4 = g4
+        self.Guest_5 = g5
+        self.Guest_6 = g6
         self.Tour = tour
         self.ID = id
 
-    def updateDetails(self, emp, g1, g2, g3, tour):
+    def updateDetails(self, emp, g1, g2, g3, g4, g5, g6, tour):
         self.Employee = emp
         self.Guest_1 = g1
         self.Guest_2 = g2
         self.Guest_3 = g3
+        self.Guest_4 = g4
+        self.Guest_5 = g5
+        self.Guest_6 = g6
         self.Tour = tour
     
     def __getitem__(self, key):
-        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Tour": self.Tour, "ID": self.ID}[key]
+        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Guest_4": self.Guest_4, "Guest_5": self.Guest_5, "Guest_6": self.Guest_6, "Tour": self.Tour, "ID": self.ID}[key]
 
 
 class DymoPrintManager(tk.Tk):
