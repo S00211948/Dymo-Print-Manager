@@ -251,7 +251,7 @@ class DymoPrintManager(tk.Tk):
 
         # If any changes have been made, call update before printing
         if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Guest_4 != guest4 or selected_emp.Guest_5 != guest5 or selected_emp.Guest_6 != guest6 or selected_emp.Tour != tour:
-            self.update_contact(emp_index, employee, guest1, guest2, guest3, guest3, guest4, guest5, guest6, tour, edit_window)
+            self.update_contact(emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, edit_window)
         self.printer.printLabelList([self.employees[emp_index]])
     
     def refresh_listbox(self, reset=True):

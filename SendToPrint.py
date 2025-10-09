@@ -23,16 +23,18 @@ class DymoPrintService():
     def printLabelList(self,dataObj):
         for d in dataObj:
             # Format data for printing
-            for l in self.formatForPrinting(d):
-                if l != False:
-                    print(l)  
-                    self.labelText.SetField("Employee", l["Employee_Name"])
-                    self.labelText.SetField("Visitor", l["Visitor_Name"])
-                    self.labelText.SetField("Tour", l["Tour_Number"])
-                    self.labelText.SetField("QRcode",l["ID"])
-                    self.label.StartPrintJob()
-                    self.label.Print(1, False)   # 1 copy, not asynchronously
-                    self.label.EndPrintJob()
+            label_data = self.formatForPrinting(d)
+            if len(label_data) > 0:
+                for l in label_data:
+                    if l != False:
+                        print(l)  
+                        self.labelText.SetField("Employee", l["Employee_Name"])
+                        self.labelText.SetField("Visitor", l["Visitor_Name"])
+                        self.labelText.SetField("Tour", l["Tour_Number"])
+                        self.labelText.SetField("QRcode",l["ID"])
+                        self.label.StartPrintJob()
+                        self.label.Print(1, False)   # 1 copy, not asynchronously
+                        self.label.EndPrintJob()
 
     def formatForPrinting(self,dataObject):
         try:
