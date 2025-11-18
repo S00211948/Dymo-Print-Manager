@@ -39,9 +39,13 @@ class DymoPrintService():
     def formatForPrinting(self,dataObject):
         try:
             res_data=[]
+            #Children Labels
             for i in range(1,7):
                 if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
                     res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
+            # Partner Label
+            if isinstance(dataObject[f'Partner'],str) and dataObject[f'Partner'] != '':
+                    res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Partner'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
             return res_data
         except Exception as e:
             return e
