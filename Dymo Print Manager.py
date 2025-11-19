@@ -3,6 +3,7 @@ from tkinter import StringVar, ttk, filedialog, messagebox
 from csv import DictReader as csv_DictReader
 from typing import List
 from SendToPrint import DymoPrintService
+from print_from_powerpoint import PowerpointPrintService
 
 class Employee():
     Employee = ""
@@ -46,6 +47,7 @@ class Employee():
 
 class DymoPrintManager(tk.Tk):
     printer = DymoPrintService()
+    pptx_printer = PowerpointPrintService()
     tour_options=["None"]
     
     def __init__(self):
@@ -150,7 +152,7 @@ class DymoPrintManager(tk.Tk):
 
         # Window dimensions
         w = 300
-        h = 300
+        h = 400
 
         # get screen width and height
         ws = self.winfo_screenwidth() # width of the screen
@@ -227,7 +229,63 @@ class DymoPrintManager(tk.Tk):
         #delete_button = ttk.Button(edit_window, text="Print", command=lambda: self.printer.printLabelList([contact]))
         print_button = ttk.Button(edit_window, text="Print", command=lambda: self.print_contact(contact.ID, employee_entry.get(), guest1_entry.get(), guest2_entry.get(), guest3_entry.get(), guest4_entry.get(), guest5_entry.get(), guest6_entry.get(), tour_entry.get(), partner_entry.get(), edit_window))
         print_button.grid(column=2, row=9, pady=10)
+    
 
+    def manage_printing(self, entries, dymo: DymoPrintService, pptx: PowerpointPrintService):
+        # Create a new Toplevel window for printing
+        print_window = tk.Toplevel(self)
+        print_window.title("Print Manager")
+
+        # Window dimensions
+        w = 400
+        h = 200
+
+        # get screen width and height
+        ws = self.winfo_screenwidth()
+        hs = self.winfo_screenheight()
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 2)
+        print_window.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
+
+        print_window.columnconfigure(0, weight=1)
+        print_window.columnconfigure(1, weight=1)
+        print_window.columnconfigure(2, weight=1)
+
+        pos = 0
+        position_txt = tk.StringVar(value=f"Entries: {pos+1}/{len(entries)}")
+        employee_txt = tk.StringVar(value=f"Employee: {entries[pos]['Employee']}")
+
+        def go_back():
+            nonlocal pos
+            if pos > 0:
+                pos -= 1
+                position_txt.set(f"Entries: {pos+1}/{len(entries)}")
+                employee_txt.set(f"Employee: {entries[pos]['Employee']}")
+
+        def go_next():
+            nonlocal pos
+            if pos < len(entries) - 1:
+                pos += 1
+                position_txt.set(f"Entries: {pos+1}/{len(entries)}")
+                employee_txt.set(f"Employee: {entries[pos]['Employee']}")
+                print("Updated Next")
+
+        def do_print():
+            dymo.printLabelList([entries[pos]])
+            pptx.printSlide(entries[pos])
+
+        # Use textvariable so the label updates dynamically
+        tk.Label(print_window, textvariable=position_txt).grid(column=0, row=1, padx=10, pady=5, sticky='EW')
+        tk.Label(print_window, textvariable=employee_txt).grid(column=1, row=1, padx=10, pady=5, sticky='EW')
+
+        # Buttons
+        ttk.Button(print_window, text="< Back", command=go_back).grid(column=0, row=2, pady=10)
+        ttk.Button(print_window, text="Print", command=do_print).grid(column=1, row=2, pady=10)
+        ttk.Button(print_window, text="Next >", command=go_next).grid(column=2, row=2, pady=10)
+
+
+
+    
     ### Listbox Entry Handler Functions
     def update_contact(self, emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, partner, edit_window):
         # Update the contact details in the contacts list
@@ -342,7 +400,8 @@ class DymoPrintManager(tk.Tk):
         entries_to_print=[]
         for e in listbox_entries:
             entries_to_print.append(next(filter(lambda emp: str.lower(e) in str.lower(emp.Employee), self.employees),None))
-        self.printer.printLabelList(entries_to_print)
+        #self.printer.printLabelList(entries_to_print)
+        self.manage_printing(entries_to_print,self.printer,self.pptx_printer)
 
 ### Data Handler Functions
 def parse_csv(file_path):

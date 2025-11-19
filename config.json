@@ -1,3 +1,4 @@
 {
-    "template":".\\Templates\\OpenDay_v2.label"
+    "template":".\\Templates\\OpenDay_v2.label",
+    "pptx-template":"./Templates/Childrens_Party_Invite_Template.pptx"
 }

@@ -16,9 +16,9 @@ class DymoPrintService():
         self.labelText = win32com.client.Dispatch("Dymo.DymoLabels")
         self.readTemplate()
         # Load the template
-        #if not self.label.Open(r"C:\Users\O89301\OneDrive - The Coca-Cola Company\Documents\DYMO Label\Labels\OpenDay-Basic.label"):
         if not self.label.Open(self.template):
             raise Exception("Could not open label template")
+        print("> Dymo Print Manager Initialized")
 
     def printLabelList(self,dataObj):
         for d in dataObj:
