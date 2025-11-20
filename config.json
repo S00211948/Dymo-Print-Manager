@@ -1,4 +1,14 @@
 {
-    "template":".\\Templates\\OpenDay_v2.label",
+    "visitor-template":".\\Templates\\OpenDay_v2.label",
+    "visitor-map":[
+        {"Label_Field":"Employee","Data_Field":"Employee_Name"}
+        ,{"Label_Field":"Visitor","Data_Field":"Visitor_Name"}
+        ,{"Label_Field":"Tour","Data_Field":"Tour_Number"}
+        ,{"Label_Field":"QRcode","Data_Field":"ID"}],
+    "address-template":".\\Templates\\PostAddress.label",
+    "address-map":[
+        {"Label_Field":"Employee","Data_Field":"Employee_Name"},
+        {"Label_Field":"Address","Data_Field":"Employee_Address"}
+    ],
     "pptx-template":"./Templates/Childrens_Party_Invite_Template.pptx"
 }

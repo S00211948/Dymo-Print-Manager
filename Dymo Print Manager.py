@@ -16,9 +16,10 @@ class Employee():
     Tour = ""
     ID=0
     Partner=""
+    Address=""
 
     # constructor
-    def __init__(self, emp, g1, g2, g3, g4, g5, g6, tour, id, partner):
+    def __init__(self, emp, g1, g2, g3, g4, g5, g6, tour, id, partner, address):
         self.Employee = emp
         self.Guest_1 = g1
         self.Guest_2 = g2
@@ -29,6 +30,7 @@ class Employee():
         self.Tour = tour
         self.ID = id
         self.Partner = partner
+        self.Address = address
 
     def updateDetails(self, emp, g1, g2, g3, g4, g5, g6, tour, partner):
         self.Employee = emp
@@ -42,7 +44,7 @@ class Employee():
         self.Partner = partner
     
     def __getitem__(self, key):
-        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Guest_4": self.Guest_4, "Guest_5": self.Guest_5, "Guest_6": self.Guest_6, "Tour": self.Tour, "ID": self.ID, "Partner": self.Partner}[key]
+        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Guest_4": self.Guest_4, "Guest_5": self.Guest_5, "Guest_6": self.Guest_6, "Tour": self.Tour, "ID": self.ID, "Partner": self.Partner, "Address":self.Address}[key]
 
 
 class DymoPrintManager(tk.Tk):
@@ -268,14 +270,15 @@ class DymoPrintManager(tk.Tk):
                 pos += 1
                 position_txt.set(f"Entries: {pos+1}/{len(entries)}")
                 employee_txt.set(f"Employee: {entries[pos]['Employee']}")
-                print("Updated Next")
 
         def do_print():
-            dymo.printLabelList([entries[pos]])
+            # Print visitor labels to be worn, then address label, then invite
+            dymo.printListWithMap("visitor-template","visitor-map",[entries[pos]])
+            dymo.printListWithMap("address-template","address-map",[entries[pos]],False)
             pptx.printSlide(entries[pos])
 
         # Use textvariable so the label updates dynamically
-        tk.Label(print_window, text="Print Invite and Label", font=("Bold")).grid(column=0, row=0, columnspan=3, padx=10, pady=5, sticky='EW')
+        tk.Label(print_window, text="Print Invite, Visitor, and Address Label", font=("Bold")).grid(column=0, row=0, columnspan=3, padx=10, pady=5, sticky='EW')
         tk.Label(print_window, textvariable=position_txt).grid(column=0, row=1, padx=10, pady=5, sticky='EW')
         tk.Label(print_window, textvariable=employee_txt).grid(column=1, row=1, padx=10, pady=5, sticky='EW')
 
@@ -411,7 +414,7 @@ def parse_csv(file_path):
     index=0
     for row in csv_DictReader(open(file_path, encoding='utf-8-sig')):
         index+=1
-        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Guest_4'],row['Guest_5'],row['Guest_6'],row['Tour_Number'],row['Employee_KOID'],row['Partner']))
+        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Guest_4'],row['Guest_5'],row['Guest_6'],row['Tour_Number'],row['Employee_KOID'],row['Partner'],row['Address']))
     
     return employees
 

@@ -10,53 +10,61 @@ class DymoPrintService():
     label = None
     labelText = None
     template = None
+    templateMap = None
     
     def __init__(self):
         self.label = win32com.client.Dispatch("Dymo.DymoAddIn")
         self.labelText = win32com.client.Dispatch("Dymo.DymoLabels")
-        self.readTemplate()
-        # Load the template
-        if not self.label.Open(self.template):
-            raise Exception("Could not open label template")
         print("> Dymo Print Manager Initialized")
 
-    def printLabelList(self,dataObj):
-        for d in dataObj:
+    def printLabelList(self,label_data):
+        #for d in label_data:
             # Format data for printing
-            label_data = self.formatForPrinting(d)
+            #label_data = self.formatForPrinting(d)
             if len(label_data) > 0:
                 for l in label_data:
                     if l != False:
-                        print(l)  
-                        self.labelText.SetField("Employee", l["Employee_Name"])
-                        self.labelText.SetField("Visitor", l["Visitor_Name"])
-                        self.labelText.SetField("Tour", l["Tour_Number"])
-                        self.labelText.SetField("QRcode",l["ID"])
+                        print(l)
+                        for mapping in self.templateMap: 
+                            self.labelText.SetField(mapping['Label_Field'], mapping["Data_Field"])
                         self.label.StartPrintJob()
                         self.label.Print(1, False)   # 1 copy, not asynchronously
                         self.label.EndPrintJob()
 
-    def formatForPrinting(self,dataObject):
+    def formatForPrinting(self,dataObject,isList=True):
         try:
             res_data=[]
-            #Children Labels
-            for i in range(1,7):
-                if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
-                    res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
-            # Partner Label
-            if isinstance(dataObject[f'Partner'],str) and dataObject[f'Partner'] != '':
-                    res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Partner'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
+            if isList:
+                #Children Labels
+                for i in range(1,7):
+                    if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
+                        res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
+                # Partner Label
+                if isinstance(dataObject[f'Partner'],str) and dataObject[f'Partner'] != '':
+                        res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Partner'],"Tour_Number":dataObject['Tour'],"ID":dataObject['ID']})
+            else:
+                res_data.append({"Employee_Name":f"{dataObject['Employee']}","Employee_Address":dataObject['Address']})
+
             return res_data
         except Exception as e:
             return e
         
-    def readTemplate(self):
+    def printListWithMap(self,templateName,mapName,dataObject,isList=True):
+        self.readTemplate(templateName,mapName)
+        for d in dataObject:
+            data = self.formatForPrinting(d,isList)
+            self.printLabelList(data)
+        
+    def readTemplate(self,templateName,mapName):
         # Get the directory of the current file
         filepath = self.get_path()
         config_path = ospath.join(filepath,'config.json')
         with open(config_path,'r') as config:
             data = jsload(config)
-        self.template = data['template']
+        self.template = data[templateName]
+        self.templateMap = data[mapName]
+        if not self.label.Open(self.template):
+            raise Exception("Could not open label template")
 
     def setTemplate(self):
         label_file = tkopenfile(
