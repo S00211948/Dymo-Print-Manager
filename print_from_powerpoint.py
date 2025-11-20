@@ -52,10 +52,10 @@ class PowerpointPrintService:
                     if i > 1:
                         guest_names +=', '
                 else:
-                    if i < 6:
+                    if i < 6 and i > 1:
                         guest_names += ', and '
 
-                guest_names += dataObj[f'Guest_{i}']
+                guest_names += str.strip(dataObj[f'Guest_{i}'])
 
         # Create invite from template
         prs = Presentation(self.template_file)
@@ -70,7 +70,6 @@ class PowerpointPrintService:
         prs.save(temp_path)
 
         # Print via PowerPoint COM interface
-        print(temp_path)
         presentation = self.ppt.Presentations.Open(temp_path, WithWindow=False)
         presentation.PrintOut()  # Default printer
         presentation.Close()

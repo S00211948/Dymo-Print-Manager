@@ -238,7 +238,7 @@ class DymoPrintManager(tk.Tk):
 
         # Window dimensions
         w = 400
-        h = 200
+        h = 100
 
         # get screen width and height
         ws = self.winfo_screenwidth()
@@ -275,6 +275,7 @@ class DymoPrintManager(tk.Tk):
             pptx.printSlide(entries[pos])
 
         # Use textvariable so the label updates dynamically
+        tk.Label(print_window, text="Print Invite and Label", font=("Bold")).grid(column=0, row=0, columnspan=3, padx=10, pady=5, sticky='EW')
         tk.Label(print_window, textvariable=position_txt).grid(column=0, row=1, padx=10, pady=5, sticky='EW')
         tk.Label(print_window, textvariable=employee_txt).grid(column=1, row=1, padx=10, pady=5, sticky='EW')
 
@@ -318,7 +319,8 @@ class DymoPrintManager(tk.Tk):
         # If any changes have been made, call update before printing
         if selected_emp.Employee != employee or selected_emp.Guest_1 != guest1 or selected_emp.Guest_2 != guest2 or selected_emp.Guest_3 != guest3 or selected_emp.Guest_4 != guest4 or selected_emp.Guest_5 != guest5 or selected_emp.Guest_6 != guest6 or selected_emp.Tour != tour or selected_emp.Partner != partner:
             self.update_contact(emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, partner, edit_window)
-        self.printer.printLabelList([self.employees[emp_index]])
+        #self.printer.printLabelList([self.employees[emp_index]])
+        self.manage_printing([self.employees[emp_index]],self.printer,self.pptx_printer)
     
     def refresh_listbox(self, reset=True):
         # Clear the Listbox
