@@ -403,10 +403,11 @@ class DymoPrintManager(tk.Tk):
     def print_labels_from_listbox(self):
         listbox_entries = self.employee_listbox.get(0,tk.END)
         entries_to_print=[]
-        for e in listbox_entries:
-            entries_to_print.append(next(filter(lambda emp: str.lower(e) in str.lower(emp.Employee), self.employees),None))
-        #self.printer.printLabelList(entries_to_print)
-        self.manage_printing(entries_to_print,self.printer,self.pptx_printer)
+        if len(listbox_entries) > 0:
+            for e in listbox_entries:
+                entries_to_print.append(next(filter(lambda emp: str.lower(e) in str.lower(emp.Employee), self.employees),None))
+            #self.printer.printLabelList(entries_to_print)
+            self.manage_printing(entries_to_print,self.printer,self.pptx_printer)
 
 ### Data Handler Functions
 def parse_csv(file_path):
