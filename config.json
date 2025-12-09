@@ -1,5 +1,5 @@
 {
-    "visitor-template":".\\Templates\\OpenDay_v2.label",
+    "visitor-template":".\\Templates\\ChildrensChristmasParty.label",
     "visitor-map":[
         {"Label_Field":"Employee","Data_Field":"Employee_Name"}
         ,{"Label_Field":"Visitor","Data_Field":"Visitor_Name"}
@@ -10,5 +10,5 @@
         {"Label_Field":"Employee","Data_Field":"Employee_Name"},
         {"Label_Field":"Address","Data_Field":"Employee_Address"}
     ],
-    "pptx-template":"./Templates/Childrens_Party_Invite_Template.pptx"
+    "pptx-template":"./Templates/Childrens_Party_Invite_Template_Full.pptx"
 }

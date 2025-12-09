@@ -26,7 +26,7 @@ class DymoPrintService():
                     if l != False:
                         print(l)
                         for mapping in self.templateMap: 
-                            self.labelText.SetField(mapping['Label_Field'], mapping["Data_Field"])
+                            self.labelText.SetField(mapping['Label_Field'], l[mapping["Data_Field"]])
                         self.label.StartPrintJob()
                         self.label.Print(1, False)   # 1 copy, not asynchronously
                         self.label.EndPrintJob()
