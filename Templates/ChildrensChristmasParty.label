@@ -91,7 +91,7 @@
 			<Verticalized>False</Verticalized>
 			<StyledText>
 				<Element>
-					<String xml:space="preserve">Employee:</String>
+					<String xml:space="preserve">Name:</String>
 					<Attributes>
 						<Font Family="Arial" Size="14" Bold="True" Italic="False" Underline="False" Strikeout="False" />
 						<ForeColor Alpha="255" Red="0" Green="0" Blue="0" HueScale="100" />
@@ -99,7 +99,7 @@
 				</Element>
 			</StyledText>
 		</TextObject>
-		<Bounds X="396.850399660882" Y="793.700799321765" Width="1515" Height="360" />
+		<Bounds X="366.850399660882" Y="688.700799321765" Width="885.000000000001" Height="360" />
 	</ObjectInfo>
 	<ObjectInfo>
 		<TextObject>
@@ -119,7 +119,7 @@
 			<Verticalized>False</Verticalized>
 			<StyledText>
 				<Element>
-					<String xml:space="preserve">Visitor:</String>
+					<String xml:space="preserve">Age:</String>
 					<Attributes>
 						<Font Family="Arial" Size="14" Bold="True" Italic="False" Underline="False" Strikeout="False" />
 						<ForeColor Alpha="255" Red="0" Green="0" Blue="0" HueScale="100" />
@@ -127,27 +127,7 @@
 				</Element>
 			</StyledText>
 		</TextObject>
-		<Bounds X="396.850399660882" Y="1303.93702745718" Width="1410" Height="375" />
-	</ObjectInfo>
-	<ObjectInfo>
-		<TextObject>
-			<Name>Employee</Name>
-			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
-			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
-			<LinkedObjectName />
-			<Rotation>Rotation0</Rotation>
-			<IsMirrored>False</IsMirrored>
-			<IsVariable>False</IsVariable>
-			<GroupID>-1</GroupID>
-			<IsOutlined>False</IsOutlined>
-			<HorizontalAlignment>Left</HorizontalAlignment>
-			<VerticalAlignment>Top</VerticalAlignment>
-			<TextFitMode>ShrinkToFit</TextFitMode>
-			<UseFullFontHeight>True</UseFullFontHeight>
-			<Verticalized>False</Verticalized>
-			<StyledText />
-		</TextObject>
-		<Bounds X="1870.86616982987" Y="793.700799321765" Width="2910" Height="360" />
+		<Bounds X="368.503942542248" Y="1218.89765610128" Width="1080" Height="420" />
 	</ObjectInfo>
 	<ObjectInfo>
 		<TextObject>
@@ -167,7 +147,27 @@
 			<Verticalized>False</Verticalized>
 			<StyledText />
 		</TextObject>
-		<Bounds X="1927.55908406714" Y="1303.93702745718" Width="2910" Height="360" />
+		<Bounds X="1492.55908406714" Y="688.700799321765" Width="3345" Height="360" />
+	</ObjectInfo>
+	<ObjectInfo>
+		<TextObject>
+			<Name>Age</Name>
+			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
+			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
+			<LinkedObjectName />
+			<Rotation>Rotation0</Rotation>
+			<IsMirrored>False</IsMirrored>
+			<IsVariable>False</IsVariable>
+			<GroupID>-1</GroupID>
+			<IsOutlined>False</IsOutlined>
+			<HorizontalAlignment>Left</HorizontalAlignment>
+			<VerticalAlignment>Top</VerticalAlignment>
+			<TextFitMode>ShrinkToFit</TextFitMode>
+			<UseFullFontHeight>True</UseFullFontHeight>
+			<Verticalized>False</Verticalized>
+			<StyledText />
+		</TextObject>
+		<Bounds X="1522.55908406714" Y="1218.89765610128" Width="3345" Height="360" />
 	</ObjectInfo>
 	<ObjectInfo>
 		<ImageObject>
@@ -188,5 +188,53 @@
 			<VerticalAlignment>Top</VerticalAlignment>
 		</ImageObject>
 		<Bounds X="4275" Y="57.9999999999999" Width="660" Height="570" />
+	</ObjectInfo>
+	<ObjectInfo>
+		<TextObject>
+			<Name>TEXT_3</Name>
+			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
+			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
+			<LinkedObjectName />
+			<Rotation>Rotation0</Rotation>
+			<IsMirrored>False</IsMirrored>
+			<IsVariable>False</IsVariable>
+			<GroupID>-1</GroupID>
+			<IsOutlined>False</IsOutlined>
+			<HorizontalAlignment>Left</HorizontalAlignment>
+			<VerticalAlignment>Top</VerticalAlignment>
+			<TextFitMode>ShrinkToFit</TextFitMode>
+			<UseFullFontHeight>True</UseFullFontHeight>
+			<Verticalized>False</Verticalized>
+			<StyledText>
+				<Element>
+					<String xml:space="preserve">Employee:</String>
+					<Attributes>
+						<Font Family="Arial" Size="10" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+						<ForeColor Alpha="255" Red="0" Green="0" Blue="0" HueScale="100" />
+					</Attributes>
+				</Element>
+			</StyledText>
+		</TextObject>
+		<Bounds X="368.503942542248" Y="1713.22834305092" Width="1005" Height="226.771656949076" />
+	</ObjectInfo>
+	<ObjectInfo>
+		<TextObject>
+			<Name>Employee</Name>
+			<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />
+			<BackColor Alpha="0" Red="255" Green="255" Blue="255" />
+			<LinkedObjectName />
+			<Rotation>Rotation0</Rotation>
+			<IsMirrored>False</IsMirrored>
+			<IsVariable>False</IsVariable>
+			<GroupID>-1</GroupID>
+			<IsOutlined>False</IsOutlined>
+			<HorizontalAlignment>Left</HorizontalAlignment>
+			<VerticalAlignment>Top</VerticalAlignment>
+			<TextFitMode>ShrinkToFit</TextFitMode>
+			<UseFullFontHeight>True</UseFullFontHeight>
+			<Verticalized>False</Verticalized>
+			<StyledText />
+		</TextObject>
+		<Bounds X="1560" Y="1713.22834305092" Width="3375" Height="226.771656949076" />
 	</ObjectInfo>
 </DieCutLabel>

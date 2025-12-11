@@ -6,27 +6,40 @@ from SendToPrint import DymoPrintService
 from print_from_powerpoint import PowerpointPrintService
 
 class Employee():
+    #TODO: Update this to use a dict of guests instead of individual properties
     Employee = ""
     Guest_1 = ""
+    Guest_1_Age = 0
     Guest_2 = ""
+    Guest_2_Age = 0
     Guest_3 = ""
+    Guest_3_Age = 0
     Guest_4 = ""
+    Guest_4_Age = 0
     Guest_5 = ""
+    Guest_5_Age = 0
     Guest_6 = ""
+    Guest_6_Age = 0
     Tour = ""
     ID=0
     Partner=""
     Address=""
 
     # constructor
-    def __init__(self, emp, g1, g2, g3, g4, g5, g6, tour, id, partner, address):
+    def __init__(self, emp, g1, g2, g3, g4, g5, g6, tour, id, partner, address, g1a, g2a, g3a, g4a, g5a, g6a):
         self.Employee = emp
         self.Guest_1 = g1
+        self.Guest_1_Age = g1a
         self.Guest_2 = g2
+        self.Guest_2_Age = g2a
         self.Guest_3 = g3
+        self.Guest_3_Age = g3a
         self.Guest_4 = g4
+        self.Guest_4_Age = g4a
         self.Guest_5 = g5
+        self.Guest_5_Age = g5a
         self.Guest_6 = g6
+        self.Guest_6_Age = g6a
         self.Tour = tour
         self.ID = id
         self.Partner = partner
@@ -44,7 +57,23 @@ class Employee():
         self.Partner = partner
     
     def __getitem__(self, key):
-        return {"Employee": self.Employee, "Guest_1": self.Guest_1, "Guest_2": self.Guest_2, "Guest_3": self.Guest_3, "Guest_4": self.Guest_4, "Guest_5": self.Guest_5, "Guest_6": self.Guest_6, "Tour": self.Tour, "ID": self.ID, "Partner": self.Partner, "Address":self.Address}[key]
+        return {"Employee": self.Employee
+                ,"Guest_1": self.Guest_1
+                ,"Guest_1_Age": self.Guest_1_Age 
+                ,"Guest_2": self.Guest_2
+                ,"Guest_2_Age": self.Guest_2_Age
+                ,"Guest_3": self.Guest_3
+                ,"Guest_3_Age": self.Guest_3_Age
+                ,"Guest_4": self.Guest_4
+                ,"Guest_4_Age": self.Guest_4_Age
+                ,"Guest_5": self.Guest_5
+                ,"Guest_5_Age": self.Guest_5_Age
+                ,"Guest_6": self.Guest_6
+                ,"Guest_6_Age": self.Guest_6_Age
+                ,"Tour": self.Tour
+                ,"ID": self.ID
+                ,"Partner": self.Partner
+                ,"Address":self.Address}[key]
 
 
 class DymoPrintManager(tk.Tk):
@@ -239,8 +268,8 @@ class DymoPrintManager(tk.Tk):
         print_window.title("Print Manager")
 
         # Window dimensions
-        w = 400
-        h = 100
+        w = 475
+        h = 200
 
         # get screen width and height
         ws = self.winfo_screenwidth()
@@ -271,21 +300,32 @@ class DymoPrintManager(tk.Tk):
                 position_txt.set(f"Entries: {pos+1}/{len(entries)}")
                 employee_txt.set(f"Employee: {entries[pos]['Employee']}")
 
-        def do_print():
+        def this_print_all():
             # Print visitor labels to be worn, then address label, then invite
             dymo.printListWithMap("visitor-template","visitor-map",[entries[pos]])
             dymo.printListWithMap("address-template","address-map",[entries[pos]],False)
             pptx.printSlide(entries[pos])
 
+        def this_print_labels():
+            # Print visitor labels to be worn, then address label
+            dymo.printListWithMap("visitor-template","visitor-map",[entries[pos]])
+            dymo.printListWithMap("address-template","address-map",[entries[pos]],False)
+
+        def all_print_invites():
+            for e in entries:
+                pptx.printSlide(e)
+
         # Use textvariable so the label updates dynamically
         tk.Label(print_window, text="Print Invite, Visitor, and Address Label", font=("Bold")).grid(column=0, row=0, columnspan=3, padx=10, pady=5, sticky='EW')
         tk.Label(print_window, textvariable=position_txt).grid(column=0, row=1, padx=10, pady=5, sticky='EW')
-        tk.Label(print_window, textvariable=employee_txt).grid(column=1, row=1, padx=10, pady=5, sticky='EW')
+        tk.Label(print_window, textvariable=employee_txt).grid(column=1, row=2, padx=10, pady=5, sticky='EW')
 
         # Buttons
         ttk.Button(print_window, text="< Back", command=go_back).grid(column=0, row=2, pady=10)
-        ttk.Button(print_window, text="Print", command=do_print).grid(column=1, row=2, pady=10)
         ttk.Button(print_window, text="Next >", command=go_next).grid(column=2, row=2, pady=10)
+        ttk.Button(print_window, text="Print All Invites", command=all_print_invites).grid(column=0, row=3, pady=10)
+        ttk.Button(print_window, text="Print All This User", command=this_print_all).grid(column=1, row=3, pady=10)
+        ttk.Button(print_window, text="Print This User Labels", command=this_print_labels).grid(column=2, row=3, pady=10)
 
 
 
@@ -415,7 +455,7 @@ def parse_csv(file_path):
     index=0
     for row in csv_DictReader(open(file_path, encoding='utf-8-sig')):
         index+=1
-        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Guest_4'],row['Guest_5'],row['Guest_6'],row['Tour_Number'],row['Employee_KOID'],row['Partner'],row['Address']))
+        employees.append(Employee(f"{row['First_Name']} {row['Surename']}",row['Guest_1'],row['Guest_2'],row['Guest_3'],row['Guest_4'],row['Guest_5'],row['Guest_6'],row['TimeSlot'],row['Employee_KOID'],row['Partner'],row['Address'],row['Guest_1_Age'],row['Guest_2_Age'],row['Guest_3_Age'],row['Guest_4_Age'],row['Guest_5_Age'],row['Guest_6_Age']))
     
     return employees
 

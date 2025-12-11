@@ -57,13 +57,36 @@ class PowerpointPrintService:
 
                 guest_names += str.strip(dataObj[f'Guest_{i}'])
 
+        # Get actual time based on timeslot
+        time=''
+        match dataObj["Tour"]:
+            case "Early Afternoon":
+                time = "12pm"
+            case "Afternoon":
+                time = "2pm"
+            case "Late Afternoon":
+                time = "4pm"
+
         # Create invite from template
         prs = Presentation(self.template_file)
         for slide in prs.slides:
             for shape in slide.shapes:
                 if shape.has_text_frame:
+                    for paragraph in shape.text_frame.paragraphs:
+                        for run in paragraph.runs:
+                            if "{{NAMES}}" in run.text:
+                                run.text = run.text.replace("{{NAMES}}", guest_names)
+                            elif "{{TIME}}" in shape.text:
+                                run.text = run.text.replace("{{TIME}}", time)
+                            elif "{{KOID}}" in shape.text:
+                                run.text = run.text.replace("{{KOID}}", str.strip(dataObj["ID"]))
+                """
+                if shape.has_text_frame:
                     if "{{NAMES}}" in shape.text:
                         shape.text = shape.text.replace("{{NAMES}}", guest_names)
+                    elif "{{KOID}}" in shape.text:
+                        shape.text = shape.text.replace("{{KOID}}", str.strip(dataObj["ID"]))
+                """
 
         temp_path = os.path.join(self.output_folder, f"Invite_{str.strip(str(dataObj['Employee']).replace(' ','_'))}_{str.strip(dataObj['ID'])}.pptx")
         print(temp_path)

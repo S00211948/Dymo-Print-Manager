@@ -3,12 +3,11 @@
     "visitor-map":[
         {"Label_Field":"Employee","Data_Field":"Employee_Name"}
         ,{"Label_Field":"Visitor","Data_Field":"Visitor_Name"}
-        ,{"Label_Field":"Tour","Data_Field":"Tour_Number"}
-        ,{"Label_Field":"QRcode","Data_Field":"ID"}],
+        ,{"Label_Field":"Age","Data_Field":"Visitor_Age"}],
     "address-template":".\\Templates\\PostAddress.label",
     "address-map":[
         {"Label_Field":"Employee","Data_Field":"Employee_Name"},
         {"Label_Field":"Address","Data_Field":"Employee_Address"}
     ],
-    "pptx-template":"./Templates/Childrens_Party_Invite_Template_Full.pptx"
+    "pptx-template":"./Templates/Childrens_Party_Invite_Template_v2.pptx"
 }
