@@ -328,7 +328,6 @@ class DymoPrintManager(tk.Tk):
         ttk.Button(print_window, text="Print This User Labels", command=this_print_labels).grid(column=2, row=3, pady=10)
 
 
-
     
     ### Listbox Entry Handler Functions
     def update_contact(self, emp_id, employee, guest1, guest2, guest3, guest4, guest5, guest6, tour, partner, edit_window):

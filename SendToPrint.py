@@ -38,7 +38,7 @@ class DymoPrintService():
                 #Children Labels
                 for i in range(1,7):
                     if isinstance(dataObject[f'Guest_{i}'],str) and dataObject[f'Guest_{i}'] != '':
-                        res_data.append({"Employee_Name":f"{dataObject['Employee']} - {dataObject['ID']}","Visitor_Name":dataObject[f'Guest_{i}'],"Visitor_Age":dataObject[f'Guest_{i}_Age']})
+                        res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Guest_{i}'],"Visitor_Age":dataObject[f'Guest_{i}_Age']})
                 # Partner Label
                 #if isinstance(dataObject[f'Partner'],str) and dataObject[f'Partner'] != '':
                  #       res_data.append({"Employee_Name":f"{dataObject['Employee']}","Visitor_Name":dataObject[f'Partner'],"Tour_Number":dataObject['Tour']})

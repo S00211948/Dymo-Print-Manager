@@ -1,5 +1,5 @@
 {
-    "visitor-template":".\\Templates\\ChildrensChristmasParty.label",
+    "visitor-template":".\\Templates\\ChildrensChristmasParty_v2.label",
     "visitor-map":[
         {"Label_Field":"Employee","Data_Field":"Employee_Name"}
         ,{"Label_Field":"Visitor","Data_Field":"Visitor_Name"}

@@ -64,7 +64,7 @@ class PowerpointPrintService:
                 time = "12pm"
             case "Afternoon":
                 time = "2pm"
-            case "Late Afternoon":
+            case "Later Afternoon ":
                 time = "4pm"
 
         # Create invite from template
@@ -79,7 +79,7 @@ class PowerpointPrintService:
                             elif "{{TIME}}" in shape.text:
                                 run.text = run.text.replace("{{TIME}}", time)
                             elif "{{KOID}}" in shape.text:
-                                run.text = run.text.replace("{{KOID}}", str.strip(dataObj["ID"]))
+                                run.text = run.text.replace("{{KOID}}", str.strip(dataObj['Employee']))
                 """
                 if shape.has_text_frame:
                     if "{{NAMES}}" in shape.text:
